@@ -20,12 +20,18 @@
       [v-cloak] {
         display: none;
       }
+      input {
+        margin: 10px;
+        display: block;
+      }
     </style>
   </head>
   <body>
     <!-- v-cloak this is for hiding the data that is visible at the time of loading or to load changes  -->
     <div id="app" v-cloak>
-      {{ greeting }}
+      <!-- now components  -->
+      <login-form />
+
       <!-- this is also event listener event  -->
       <!-- <input @keyup.enter="greet" v-model="greeting" /> -->
       <!-- now passing some parameters with function  -->
@@ -62,6 +68,29 @@
           },
           greet(greeting) {
             console.log(greeting);
+          },
+        },
+      });
+
+      app.component("login-form", {
+        template: `
+        <form @submit.prevent="handleSubmit">
+            <h1>{{ title }}</h1>
+            <input type="email" v-model = "email"/>
+            <input type="password" v-model = 'password' />
+            <button>Login</button>
+        </form>
+        `,
+        data() {
+          return {
+            title: "Login Form",
+            email: "",
+            password: "",
+          };
+        },
+        methods: {
+          handleSubmit() {
+            console.log(this.email, this.password);
           },
         },
       });
