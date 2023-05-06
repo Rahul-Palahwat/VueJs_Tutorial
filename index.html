@@ -30,7 +30,7 @@
     <!-- v-cloak this is for hiding the data that is visible at the time of loading or to load changes  -->
     <div id="app" v-cloak>
       <!-- now components  -->
-      <login-form />
+      <!-- <login-form /> -->
 
       <!-- this is also event listener event  -->
       <!-- <input @keyup.enter="greet" v-model="greeting" /> -->
@@ -48,7 +48,7 @@
       <button @click="toggleBox">Toggle Box</button>
 
       <!-- if is like condition but show will play with visibility  -->
-      <div v-if="isVisible" class="box">1</div>
+      <test-box v-if="isVisible"></test-box>
       <!-- <div v-else-if="isVisible2" class="box two">2</div> -->
       <!-- <div v-else class="box three">3</div> -->
       <!-- <div v-show="isVisible" class="box"></div> -->
@@ -70,83 +70,101 @@
             console.log(greeting);
           },
         },
+        updated() {
+          console.log("Component is updated");
+        },
       });
 
-      app.component("login-form", {
+      app.component("test-box", {
         template: `
-        <form @submit.prevent="handleSubmit">
-            <h1>{{ title }}</h1>
-            
-            <custom-input
-            v-for="(input , i) in inputs"
-             v-model="input.value"
-              v-bind:label='input.label'
-              :key="i"
-              :type='input.type'
-            />
-            <button>Login</button>
-        </form>
+        <div class = "box"></div>
         `,
-        components: ["custom-input"],
-        data() {
-          return {
-            title: "Login Form",
-            inputs: [
-              {
-                label: "Name",
-                value: "",
-                type: "text",
-              },
-              {
-                label: "Email",
-                value: "",
-                type: "email",
-              },
-              {
-                label: "Password",
-                value: "",
-                type: "password",
-              },
-            ],
-          };
+        created() {
+          console.log("Component created");
         },
-        methods: {
-          handleSubmit() {
-            console.log(
-              this.inputs[0].value,
-              this.inputs[1].value,
-              this.inputs[2].value
-            );
-          },
+        mounted() {
+          console.log("Component is mounted");
+        },
+        unmounted() {
+          console.log("Component is unmounted");
         },
       });
-      app.component("custom-input", {
-        template: `
-        <label>
-            {{label}}
-            <input :type="type" v-model="inputValue"/>
-            </label>
-        `,
-        props: ["label", "type", "modelValue"],
-        computed: {
-          inputValue: {
-            get() {
-              return this.modelValue;
-            },
-            set(value) {
-              //   console.log("Value in setter", value);
-              // props are readonly , so we cant update them directly so we use emit event
-              //   this allow me to emit events that other component can listen
-              this.$emit("update:modelValue", value);
-            },
-          },
-        },
-        // data() {
-        //   return {
-        //     inputValue: "",
-        //   };
-        // },
-      });
+
+      //   app.component("login-form", {
+      //     template: `
+      //     <form @submit.prevent="handleSubmit">
+      //         <h1>{{ title }}</h1>
+
+      //         <custom-input
+      //         v-for="(input , i) in inputs"
+      //          v-model="input.value"
+      //           v-bind:label='input.label'
+      //           :key="i"
+      //           :type='input.type'
+      //         />
+      //         <button>Login</button>
+      //     </form>
+      //     `,
+      //     components: ["custom-input"],
+      //     data() {
+      //       return {
+      //         title: "Login Form",
+      //         inputs: [
+      //           {
+      //             label: "Name",
+      //             value: "",
+      //             type: "text",
+      //           },
+      //           {
+      //             label: "Email",
+      //             value: "",
+      //             type: "email",
+      //           },
+      //           {
+      //             label: "Password",
+      //             value: "",
+      //             type: "password",
+      //           },
+      //         ],
+      //       };
+      //     },
+      //     methods: {
+      //       handleSubmit() {
+      //         console.log(
+      //           this.inputs[0].value,
+      //           this.inputs[1].value,
+      //           this.inputs[2].value
+      //         );
+      //       },
+      //     },
+      //   });
+      //   app.component("custom-input", {
+      //     template: `
+      //     <label>
+      //         {{label}}
+      //         <input :type="type" v-model="inputValue"/>
+      //         </label>
+      //     `,
+      //     props: ["label", "type", "modelValue"],
+      //     computed: {
+      //       inputValue: {
+      //         get() {
+      //           return this.modelValue;
+      //         },
+      //         set(value) {
+      //           //   console.log("Value in setter", value);
+      //           // props are readonly , so we cant update them directly so we use emit event
+      //           //   this allow me to emit events that other component can listen
+      //           this.$emit("update:modelValue", value);
+      //         },
+      //       },
+      //     },
+      //     // data() {
+      //     //   return {
+      //     //     inputValue: "",
+      //     //   };
+      //     // },
+      //   });
       app.mount("#app");
     </script>
   </body>
