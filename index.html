@@ -26,12 +26,25 @@
     <!-- v-cloak this is for hiding the data that is visible at the time of loading or to load changes  -->
     <div id="app" v-cloak>
       {{ greeting }}
-      <input v-model="greeting" />
+      <!-- this is also event listener event  -->
+      <!-- <input @keyup.enter="greet" v-model="greeting" /> -->
+      <!-- now passing some parameters with function  -->
+      <!-- here enter is a modifier -->
+      <input @keyup.enter="greet(greeting + '!!!!!!')" v-model="greeting" />
       <hr />
+
+      <!-- events listining -->
+      <!-- v-on is for events  -->
+      <!-- <button v-on:click="isVisible = !isVisible">Toggle Box</button> -->
+      <!-- short hand of the above event  -->
+      <!-- <button @click="isVisible = !isVisible">Toggle Box</button> -->
+      <!-- Now toggling using method -->
+      <button @click="toggleBox">Toggle Box</button>
+
       <!-- if is like condition but show will play with visibility  -->
       <div v-if="isVisible" class="box">1</div>
-      <div v-else-if="isVisible2" class="box two">2</div>
-      <div v-else class="box three">3</div>
+      <!-- <div v-else-if="isVisible2" class="box two">2</div> -->
+      <!-- <div v-else class="box three">3</div> -->
       <!-- <div v-show="isVisible" class="box"></div> -->
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -40,9 +53,16 @@
         data: function () {
           return {
             greeting: "Hello Vue 3!",
-            isVisible: true,
-            isVisible2: true,
+            isVisible: false,
           };
+        },
+        methods: {
+          toggleBox() {
+            this.isVisible = !this.isVisible;
+          },
+          greet(greeting) {
+            console.log(greeting);
+          },
         },
       });
       app.mount("#app");
